@@ -2,31 +2,27 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('heroes', {
+    await queryInterface.createTable('images', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      nickName: {
-        field: 'nick_name',
-        type: Sequelize.STRING,
-        unique: true,
-        allowNull: false
+      heroId: {
+        field: 'hero_id',
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: {
+            tableName: 'heroes'
+          },
+          key: 'id'
+        },
       },
-      realName: {
-        field: 'real_name',
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      origin_descriptiom: {
-        field: 'origin_descriptiom',
+      imagePath: {
+        field: 'image_path',
         type: Sequelize.TEXT
-      },
-      catch_phrase: {
-        field: 'catch_phrase',
-        type: Sequelize.STRING,
       },
       createdAt: {
         field: 'created_at',
@@ -41,6 +37,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('heroes');
+    await queryInterface.dropTable('images');
   }
 };

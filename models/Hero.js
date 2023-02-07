@@ -10,7 +10,13 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Hero.hasMany(models.Image, {
+        foreignKey: 'heroes_id'
+      });
+      Hero.belongsToMany(models.Power, {
+        through:'powers_to_heroes',
+        foreignKey: 'heroes_id'
+      });
     }
   }
   Hero.init({
@@ -27,18 +33,17 @@ module.exports = (sequelize, DataTypes) => {
     },
     originDescriptiom: {
       field: 'origin_descriptiom',
-      type: DataTypes.TEXT
+      type: DataTypes.STRING
     },
     catchPhrase: {
       field: 'catch_phrase',
       type: DataTypes.STRING,
-      allowNull: false
     }
   }, {
     sequelize,
     modelName: 'Hero',
     tableName: 'heroes',
-    underscored
+    underscored: true
   });
   return Hero;
 };
